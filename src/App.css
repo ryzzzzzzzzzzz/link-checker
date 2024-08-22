@@ -1,0 +1,56 @@
+body {
+  text-align: center;
+  background-color: #0A1F32;
+  color: white;
+  padding-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+textarea {
+  background-image: linear-gradient(#F1F1F1 50%, #F9F9F9 50%);
+  background-size: 100% 4rem;
+  border: 1px solid #fff;
+  min-width: 500px;
+  min-height: 410px;
+  max-height: 2000px;
+  line-height: 2rem;
+  padding: 4px 8px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  resize: horizontal;
+}
+
+.divBtn {
+  width: 100%;
+  background-color: #fff;
+}
+
+#btn, #btn-2 {
+  width: 200px;
+  height: 40px;
+}
+
+.table {
+  border-collapse: collapse;
+  margin-top: 2.5rem;
+  min-width: 500px;
+  max-width: 700px;
+  line-height: 1.82rem;
+  height: auto;
+  font-size: 12px;
+  display: flex;
+}
+
+.table td {
+  border: 1px solid #fff;
+  min-height: 10px;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: darkred;
+}
