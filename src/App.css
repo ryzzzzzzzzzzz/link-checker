@@ -39,6 +39,7 @@ textarea {
   height: auto;
   font-size: 12px;
   display: flex;
+  border: solid 1px #fff;
 }
 
 .table td {
