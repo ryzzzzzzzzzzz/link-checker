@@ -1,0 +1,9 @@
+ingress:
+  enabled: true
+  path: "/"
+
+service:
+  enabled: true
+  externalPort: 3000
+  internalPort: 3000
+  url: links.figvam.ru
