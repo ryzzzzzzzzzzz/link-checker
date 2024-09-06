@@ -1,11 +1,13 @@
 import React, {useState} from "react";
 import "./../App.css"
+import $ from "jquery"
 
 function Main() {
 
-    const [counter200, setCounter200] = useState(0);
-    const [counter404, setCounter404] = useState(0);
-    const [counter500, setCounter500] = useState(0);
+    const [counter2xx, setCounter2xx] = useState(0);
+    const [counter3xx, setCounter3xx] = useState(0);
+    const [counter4xx, setCounter4xx] = useState(0);
+    const [counter5xx, setCounter5xx] = useState(0);
     const [counterOther, setCounterOther] = useState(0);
     const [loading, setLoading] = useState(false);
 
@@ -46,24 +48,60 @@ function Main() {
                     j = j + 3;
                     switch (value) {
                         case '200 OK':
-                            newCell.innerHTML = '<div class="green">' + value + ' ' + '</div>';
-                            setCounter200((counter200) => { return counter200 + 1; });
+                            newCell.innerHTML = '<div class="green">' + value + '</div>';
+                            setCounter2xx((counter2xx) => { return counter2xx + 1; });
+                            break;
+                        case '301 Moved Permanently':
+                            newCell.innerHTML = '<div class="yellow-green">' + value + '</div>';
+                            setCounter3xx((counter3xx) => { return counter3xx + 1; });
+                            break;
+                        case '304 Not Modified':
+                            newCell.innerHTML = '<div class="yellow-green">' + value + '</div>';
+                            setCounter3xx((counter3xx) => { return counter3xx + 1; });
+                            break;
+                        case '400 Bad Request':
+                            newCell.innerHTML = '<div class="yellow">' + value + '</div>';
+                            setCounter4xx((counter4xx) => { return counter4xx + 1; });
+                            break;
+                        case '403 Forbidden':
+                            newCell.innerHTML = '<div class="yellow">' + value + '</div>';
+                            setCounter4xx((counter4xx) => { return counter4xx + 1; });
                             break;
                         case '404 Not Found':
-                            newCell.innerHTML = '<div class="yellow">' + value + ' ' + '</div>';
-                            setCounter404((counter404) => { return counter404 + 1; });
+                            newCell.innerHTML = '<div class="yellow">' + value + '</div>';
+                            setCounter4xx((counter4xx) => { return counter4xx + 1; });
+                            break;
+                        case '413 Request Entity Too Large':
+                            newCell.innerHTML = '<div class="yellow">' + value + '</div>';
+                            setCounter4xx((counter4xx) => { return counter4xx + 1; });
+                            break;
+                        case '414 Request-URL Too Long':
+                            newCell.innerHTML = '<div class="yellow">' + value + '</div>';
+                            setCounter4xx((counter4xx) => { return counter4xx + 1; });
                             break;
                         case '500 Internal Server Error':
-                            newCell.innerHTML = '<div class="red">' + value + ' ' + '</div>';
-                            setCounter500((counter500) => { return counter500 + 1});
+                            newCell.innerHTML = '<div class="red">' + value + '</div>';
+                            setCounter5xx((counter5xx) => { return counter5xx + 1});
+                            break;
+                        case '502 Bad Gateway':
+                            newCell.innerHTML = '<div class="red">' + value + '</div>';
+                            setCounter5xx((counter5xx) => { return counter5xx + 1});
+                            break;
+                        case '503 Service Unavailable':
+                            newCell.innerHTML = '<div class="red">' + value + '</div>';
+                            setCounter5xx((counter5xx) => { return counter5xx + 1});
+                            break;
+                        case '504 Gateway Timeout':
+                            newCell.innerHTML = '<div class="red">' + value + '</div>';
+                            setCounter5xx((counter5xx) => { return counter5xx + 1});
                             break;
                         default:
-                            newCell.innerHTML = '<div>' + value + '</div>';
+                            newCell.innerHTML = '<div class="other">' + value + '</div>';
                             setCounterOther((counterOther) => { return counterOther + 1});
                             break;
                     }
                 } else {
-                    newCell.innerHTML = '<div>' + value + ' ' + '</div>';
+                    newCell.innerHTML = '<div>' + value + '</div>';
                 }
                 i = i + 1;
             })
@@ -72,13 +110,34 @@ function Main() {
     }
 
     function btnCopyTable () {
-        let tableForCopy = document.getElementById('table').outerHTML;
-        tableForCopy = tableForCopy
-            .replaceAll('\n', '<br style="mso-data-placement:same-cell;"/>')
-            .replaceAll('<td','<td style="vertical-align: top;"');
-        navigator.clipboard.writeText(tableForCopy)
-        .then(() => {console.log('Copied!')})
+        let csvData = [];
+        let rows = document.getElementsByTagName('tr');
+        for(let i = 0; i < rows.length; i++){
+            let cols = rows[i].querySelectorAll('td, th');
+            let csvrow = [];
+            for(let j = 0; j < cols.length; j++){
+                csvrow.push(cols[j].innerHTML);
+            }
+            csvData.push(csvrow.join(','));
+        }
+        csvData = csvData.join('\n');
+        csvData = $(csvData).text();
+        csvData = csvData.toString();
+        navigator.clipboard.writeText(csvData).then(() => {console.log('Copied!')})
+        // let tableForCopy = document.getElementById('table').outerHTML;
+        // tableForCopy = tableForCopy
+        //     .replaceAll('\n', '<br style="mso-data-placement:same-cell;"/>')
+        //     .replaceAll('<td','<td style="vertical-align: top;"');
+        // navigator.clipboard.writeText(tableForCopy)
+        // .then(() => {console.log('Copied!')})
+        // .replace(/<div[^>]*?>[\s\S]*?<\/div>/i, '')
     }
+
+    // function replaceDiv (csvData) {
+    //     csvData = $(csvData).text();
+    //     csvData = csvData.toString();
+    //     navigator.clipboard.writeText(csvData).then(() => {console.log('Copied!')})
+    // }
 
 
     return(
@@ -93,19 +152,20 @@ function Main() {
             </div>
 
                 <div className='button-container-1'>
-                    <button onClick={response}>Check links</button>
+                    <button onClick={response}>Check links as CSV</button>
                 </div>
                 <div className='button-container-2'>
                     <button onClick={btnCopyTable}>Copy links</button>
                 </div>
             <div className='result-container'>
-                <div><span id='result-200'>Code 200: {counter200}</span></div>
-                <div><span id='result-400'>Code 404: {counter404}</span></div>
-                <div><span id='result-500'>Code 500: {counter500}</span></div>
+                <div><span id='result-2xx'>Code 2xx: {counter2xx}</span></div>
+                <div><span id='result-3xx'>Code 3xx: {counter3xx}</span></div>
+                <div><span id='result-4xx'>Code 4xx: {counter4xx}</span></div>
+                <div><span id='result-5xx'>Code 5xx: {counter5xx}</span></div>
                 <div><span id='result-other'>Other: {counterOther}</span></div>
             </div>
             <div className='loading-container'>
-                {loading === true &&
+            {loading === true &&
                     <div className='loader'>
                         <div className='psoload'>
                             <div className="straight"></div>
@@ -116,19 +176,15 @@ function Main() {
                     </div>}
             </div>
             <div className='table-container'>
-                <table id='table' cellPadding='2' cellSpacing='5
-
-
-
-
-
-
-                '>
+                <table id='table' cellPadding='2' cellSpacing='5'>
                     <thead>
                     <tr>
-                        <th>URL</th>
-                        <th>CODE</th>
-                        <th>ERROR</th>
+                        <th>
+                            <div>URL</div></th>
+                        <th>
+                            <div>CODE</div></th>
+                        <th>
+                            <div>ERROR</div></th>
                     </tr>
                     </thead>
                     <tbody>
