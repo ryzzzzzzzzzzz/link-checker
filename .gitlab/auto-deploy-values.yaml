@@ -9,4 +9,4 @@ service:
 
 extraEnv:
  - name:  REACT_APP_FETCH_URL
-   value: https://figvam-go-curl.figvam.ru/
+   value: https://figvam-go-curl.figvam.ru/api/v1/search
