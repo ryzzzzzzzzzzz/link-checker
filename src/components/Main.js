@@ -52,45 +52,21 @@ function Main() {
                             setCounter2xx((counter2xx) => { return counter2xx + 1; });
                             break;
                         case '301 Moved Permanently':
-                            newCell.innerHTML = '<div class="yellow-green">' + value + '</div>';
-                            setCounter3xx((counter3xx) => { return counter3xx + 1; });
-                            break;
                         case '304 Not Modified':
                             newCell.innerHTML = '<div class="yellow-green">' + value + '</div>';
                             setCounter3xx((counter3xx) => { return counter3xx + 1; });
                             break;
                         case '400 Bad Request':
-                            newCell.innerHTML = '<div class="yellow">' + value + '</div>';
-                            setCounter4xx((counter4xx) => { return counter4xx + 1; });
-                            break;
                         case '403 Forbidden':
-                            newCell.innerHTML = '<div class="yellow">' + value + '</div>';
-                            setCounter4xx((counter4xx) => { return counter4xx + 1; });
-                            break;
                         case '404 Not Found':
-                            newCell.innerHTML = '<div class="yellow">' + value + '</div>';
-                            setCounter4xx((counter4xx) => { return counter4xx + 1; });
-                            break;
                         case '413 Request Entity Too Large':
-                            newCell.innerHTML = '<div class="yellow">' + value + '</div>';
-                            setCounter4xx((counter4xx) => { return counter4xx + 1; });
-                            break;
                         case '414 Request-URL Too Long':
                             newCell.innerHTML = '<div class="yellow">' + value + '</div>';
                             setCounter4xx((counter4xx) => { return counter4xx + 1; });
                             break;
                         case '500 Internal Server Error':
-                            newCell.innerHTML = '<div class="red">' + value + '</div>';
-                            setCounter5xx((counter5xx) => { return counter5xx + 1});
-                            break;
                         case '502 Bad Gateway':
-                            newCell.innerHTML = '<div class="red">' + value + '</div>';
-                            setCounter5xx((counter5xx) => { return counter5xx + 1});
-                            break;
                         case '503 Service Unavailable':
-                            newCell.innerHTML = '<div class="red">' + value + '</div>';
-                            setCounter5xx((counter5xx) => { return counter5xx + 1});
-                            break;
                         case '504 Gateway Timeout':
                             newCell.innerHTML = '<div class="red">' + value + '</div>';
                             setCounter5xx((counter5xx) => { return counter5xx + 1});
@@ -124,21 +100,8 @@ function Main() {
         csvData = $(csvData).text();
         csvData = csvData.toString();
         navigator.clipboard.writeText(csvData).then(() => {console.log('Copied!')})
-        // let tableForCopy = document.getElementById('table').outerHTML;
-        // tableForCopy = tableForCopy
-        //     .replaceAll('\n', '<br style="mso-data-placement:same-cell;"/>')
-        //     .replaceAll('<td','<td style="vertical-align: top;"');
-        // navigator.clipboard.writeText(tableForCopy)
-        // .then(() => {console.log('Copied!')})
-        // .replace(/<div[^>]*?>[\s\S]*?<\/div>/i, '')
+
     }
-
-    // function replaceDiv (csvData) {
-    //     csvData = $(csvData).text();
-    //     csvData = csvData.toString();
-    //     navigator.clipboard.writeText(csvData).then(() => {console.log('Copied!')})
-    // }
-
 
     return(
         <div className='container'>
@@ -152,10 +115,10 @@ function Main() {
             </div>
 
                 <div className='button-container-1'>
-                    <button onClick={response}>Check links as CSV</button>
+                    <button onClick={response}>Check links</button>
                 </div>
                 <div className='button-container-2'>
-                    <button onClick={btnCopyTable}>Copy links</button>
+                    <button onClick={btnCopyTable}>Copy links as CSV</button>
                 </div>
             <div className='result-container'>
                 <div><span id='result-2xx'>Code 2xx: {counter2xx}</span></div>
