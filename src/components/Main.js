@@ -12,31 +12,63 @@ function Main() {
     const [loading, setLoading] = useState(false);
 
     let data = {
-        urls: ['']
+        urls: [''],
     }
+
+    let resultTest = [];
+    let intervalID = 0;
+    let prevStateTable = [];
 
     function createLinesArray() {
         let textaeraVal = document.querySelector('#textarea').value;
         let linesArray = textaeraVal.split(/\n/);
         Object.assign(data.urls, linesArray);
+        console.log(data);
     }
 
     async function response(linesArray, res) {
         setLoading(true);
         document.getElementById('textarea').value = '';
-        await fetch(process.env.REACT_APP_FETCH_URL, {
+        await fetch(process.env.REACT_APP_FETCH_URL_TOKEN, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         })
-            .then(result => result.json())
-            .then(result => fillTable(result))}
+            .then(token => token.json())
+            .then(function (token){
+                intervalID = setInterval(() => test(token), 100)
+            })
+    }
 
-    function fillTable(result) {
+    async function test(token) {
+        console.log(JSON.stringify(token));
+        await fetch(process.env.REACT_APP_FETCH_URL_RESPONSE, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(token)
+        })
+            .then(result => result.json())
+            .then(result => resultTest = result.body)
+            .then(function(resultTest)
+        {
+            if(JSON.stringify(resultTest) !== JSON.stringify(prevStateTable)) {
+                document.getElementById('table').getElementsByTagName('tbody').innerHTML = '';
+                prevStateTable = resultTest.map((el) => el);
+                fillTable(resultTest);
+            }
+            else {
+                clearInterval(intervalID);
+            }
+        })
+    }
+
+    function fillTable(resultTest) {
         let tbodyRef = document.getElementById('table').getElementsByTagName('tbody')[0];
-        result.forEach(row => {
+        resultTest.forEach(row => {
             let newRow = tbodyRef.insertRow();
             let i = 1;
             let j = 2;
@@ -45,7 +77,7 @@ function Main() {
                 let newText = document.createTextNode(value);
                 newCell.appendChild(newText);
                 if (i === j) {
-                    j = j + 3;
+                    j = j + 6;
                     switch (value) {
                         case '200 OK':
                             newCell.innerHTML = '<div class="green">' + value + '</div>';
@@ -100,7 +132,6 @@ function Main() {
         csvData = $(csvData).text();
         csvData = csvData.toString();
         navigator.clipboard.writeText(csvData).then(() => {console.log('Copied!')})
-
     }
 
     return(
@@ -143,11 +174,20 @@ function Main() {
                     <thead>
                     <tr>
                         <th>
-                            <div>URL</div></th>
+                            <div>URL</div>
+                        </th>
                         <th>
-                            <div>CODE</div></th>
+                            <div>CODE</div>
+                        </th>
                         <th>
-                            <div>ERROR</div></th>
+                            <div>TITLE</div>
+                        </th>
+                        <th>
+                            <div>META DESCRIPTION</div>
+                        </th>
+                        <th>
+                            <div>H1</div>
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
