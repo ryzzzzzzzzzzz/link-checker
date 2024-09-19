@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import "./../App.css"
-import $ from "jquery"
 
 function Main() {
 
@@ -15,7 +14,7 @@ function Main() {
         urls: [''],
     }
 
-    let resultTest = [];
+    let resultTable = [];
     let intervalID = 0;
     let prevStateTable = [];
 
@@ -23,7 +22,6 @@ function Main() {
         let textaeraVal = document.querySelector('#textarea').value;
         let linesArray = textaeraVal.split(/\n/);
         Object.assign(data.urls, linesArray);
-        console.log(data);
     }
 
     async function response(linesArray, res) {
@@ -38,12 +36,11 @@ function Main() {
         })
             .then(token => token.json())
             .then(function (token){
-                intervalID = setInterval(() => test(token), 100)
+                intervalID = setInterval(() => getResult(token), 100)
             })
     }
 
-    async function test(token) {
-        console.log(JSON.stringify(token));
+    async function getResult(token) {
         await fetch(process.env.REACT_APP_FETCH_URL_RESPONSE, {
             method: 'POST',
             headers: {
@@ -52,13 +49,13 @@ function Main() {
             body: JSON.stringify(token)
         })
             .then(result => result.json())
-            .then(result => resultTest = result.body)
-            .then(function(resultTest)
+            .then(result => resultTable = result.body)
+            .then(function(resultTable)
         {
-            if(JSON.stringify(resultTest) !== JSON.stringify(prevStateTable)) {
+            if(JSON.stringify(resultTable) !== JSON.stringify(prevStateTable)) {
                 document.getElementById('table').getElementsByTagName('tbody').innerHTML = '';
-                prevStateTable = resultTest.map((el) => el);
-                fillTable(resultTest);
+                prevStateTable = resultTable.map((el) => el);
+                fillTable(resultTable);
             }
             else {
                 clearInterval(intervalID);
@@ -66,9 +63,9 @@ function Main() {
         })
     }
 
-    function fillTable(resultTest) {
+    function fillTable(resultTable) {
         let tbodyRef = document.getElementById('table').getElementsByTagName('tbody')[0];
-        resultTest.forEach(row => {
+        resultTable.forEach(row => {
             let newRow = tbodyRef.insertRow();
             let i = 1;
             let j = 2;
@@ -76,45 +73,57 @@ function Main() {
                 let newCell = newRow.insertCell();
                 let newText = document.createTextNode(value);
                 newCell.appendChild(newText);
+                newCell.innerHTML = value;
                 if (i === j) {
                     j = j + 6;
-                    switch (value) {
-                        case '200 OK':
-                            newCell.innerHTML = '<div class="green">' + value + '</div>';
-                            setCounter2xx((counter2xx) => { return counter2xx + 1; });
-                            break;
-                        case '301 Moved Permanently':
-                        case '304 Not Modified':
-                            newCell.innerHTML = '<div class="yellow-green">' + value + '</div>';
-                            setCounter3xx((counter3xx) => { return counter3xx + 1; });
-                            break;
-                        case '400 Bad Request':
-                        case '403 Forbidden':
-                        case '404 Not Found':
-                        case '413 Request Entity Too Large':
-                        case '414 Request-URL Too Long':
-                            newCell.innerHTML = '<div class="yellow">' + value + '</div>';
-                            setCounter4xx((counter4xx) => { return counter4xx + 1; });
-                            break;
-                        case '500 Internal Server Error':
-                        case '502 Bad Gateway':
-                        case '503 Service Unavailable':
-                        case '504 Gateway Timeout':
-                            newCell.innerHTML = '<div class="red">' + value + '</div>';
-                            setCounter5xx((counter5xx) => { return counter5xx + 1});
-                            break;
-                        default:
-                            newCell.innerHTML = '<div class="other">' + value + '</div>';
-                            setCounterOther((counterOther) => { return counterOther + 1});
-                            break;
-                    }
-                } else {
-                    newCell.innerHTML = '<div>' + value + '</div>';
+                    newCell.classList.add('codeColClass');
                 }
                 i = i + 1;
             })
         })
         setLoading(false);
+        colorCode();
+    }
+
+    function colorCode() {
+        let tab = document.getElementById('table');
+        let codeCellCollection = document.getElementsByClassName('codeColClass');
+        for (let i = 0; i <= codeCellCollection.length; i++) {
+            let codeCol = codeCellCollection[i];
+            codeCol = codeCol.textContent;
+            for (let i = 1; i <= tab.rows.length - 1; i++) {
+                switch (codeCol) {
+                    case '200 OK':
+                        document.getElementById('table').rows[i].cells[1].classList.add('green');
+                        setCounter2xx((counter2xx) => { return counter2xx + 1; });
+                        break;
+                    case '301 Moved Permanently':
+                    case '304 Not Modified':
+                        document.getElementById('table').rows[i].cells[1].classList.add('yellow-green');
+                        setCounter3xx((counter3xx) => { return counter3xx + 1; });
+                        break;
+                    case '400 Bad Request':
+                    case '403 Forbidden':
+                    case '404 Not Found':
+                    case '413 Request Entity Too Large':
+                    case '414 Request-URL Too Long':
+                        document.getElementById('table').rows[i].cells[1].classList.add('yellow');
+                        setCounter4xx((counter4xx) => { return counter4xx + 1; });
+                        break;
+                    case '500 Internal Server Error':
+                    case '502 Bad Gateway':
+                    case '503 Service Unavailable':
+                    case '504 Gateway Timeout':
+                        document.getElementById('table').rows[i].cells[1].classList.add('red');
+                        setCounter5xx((counter5xx) => { return counter5xx + 1});
+                        break;
+                    default:
+                        document.getElementById('table').rows[i].cells[1].classList.add('other');
+                        setCounterOther((counterOther) => { return counterOther + 1});
+                        break;
+                }
+            }
+        }
     }
 
     function btnCopyTable () {
@@ -129,7 +138,7 @@ function Main() {
             csvData.push(csvrow.join(','));
         }
         csvData = csvData.join('\n');
-        csvData = $(csvData).text();
+        // csvData = $(csvData).text();
         csvData = csvData.toString();
         navigator.clipboard.writeText(csvData).then(() => {console.log('Copied!')})
     }
@@ -174,23 +183,23 @@ function Main() {
                     <thead>
                     <tr>
                         <th>
-                            <div>URL</div>
+                            URL
                         </th>
                         <th>
-                            <div>CODE</div>
+                            CODE
                         </th>
                         <th>
-                            <div>TITLE</div>
+                            TITLE
                         </th>
                         <th>
-                            <div>META DESCRIPTION</div>
+                            META DESCRIPTION
                         </th>
                         <th>
-                            <div>H1</div>
+                            H1
                         </th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody className='tbody'>
                     </tbody>
                 </table>
             </div>
