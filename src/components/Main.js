@@ -27,7 +27,7 @@ function Main() {
     async function response(linesArray, res) {
         setLoading(true);
         document.getElementById('textarea').value = '';
-        await fetch(process.env.REACT_APP_FETCH_URL_TOKEN, {
+        await fetch(process.env.REACT_APP_FETCH_URL + 'new_task', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -36,17 +36,16 @@ function Main() {
         })
             .then(token => token.json())
             .then(function (token){
-                intervalID = setInterval(() => getResult(token), 100)
+                intervalID = setInterval(() => getResult(token.token), 2000)
             })
     }
 
     async function getResult(token) {
-        await fetch(process.env.REACT_APP_FETCH_URL_RESPONSE, {
-            method: 'POST',
+        await fetch(process.env.REACT_APP_FETCH_URL + 'task/' + token, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(token)
         })
             .then(result => result.json())
             .then(result => resultTable = result.body)
@@ -88,7 +87,7 @@ function Main() {
     function colorCode() {
         let tab = document.getElementById('table');
         let codeCellCollection = document.getElementsByClassName('codeColClass');
-        for (let i = 0; i <= codeCellCollection.length; i++) {
+        for (let i = 0; i < codeCellCollection.length; i++) {
             let codeCol = codeCellCollection[i];
             codeCol = codeCol.textContent;
             for (let i = 1; i <= tab.rows.length - 1; i++) {
@@ -140,7 +139,8 @@ function Main() {
         csvData = csvData.join('\n');
         // csvData = $(csvData).text();
         csvData = csvData.toString();
-        navigator.clipboard.writeText(csvData).then(() => {console.log('Copied!')})
+        navigator.clipboard.writeText(csvData)
+            .then(() => console.log('Copied!'))
     }
 
     return(
@@ -158,7 +158,7 @@ function Main() {
                     <button onClick={response}>Check links</button>
                 </div>
                 <div className='button-container-2'>
-                    <button onClick={btnCopyTable}>Copy links as CSV</button>
+                    <button onClick={btnCopyTable} id='copy'>Copy links as CSV</button>
                 </div>
             <div className='result-container'>
                 <div><span id='result-2xx'>Code 2xx: {counter2xx}</span></div>

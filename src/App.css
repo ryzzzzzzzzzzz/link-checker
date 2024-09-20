@@ -145,10 +145,12 @@ body {
     flex-direction: row;
     justify-content: center;
     white-space: nowrap;
+    font-size: 1.3vw;
+    text-align: center;
 }
 
 .result-container div {
-    margin-top: 24px;
+    margin-top: 16px;
     margin-left: 20px;
 }
 
@@ -175,7 +177,7 @@ body {
 .textarea-container {
     grid-area: textarea;
     max-width: 100%;
-    height: 700px;
+    height: 100%;
 }
 
 #textarea {
@@ -190,13 +192,14 @@ body {
     font-weight: 400;
     line-height: 1.5;
     color: #212529;
+    box-sizing: border-box;
 }
 
 .table-container {
     outline: 1px solid black;
     grid-area: table;
     max-width: 100%;
-    height: 713px;
+    height: 100%;
     overflow: hidden;
     border-radius: 15px;
 }
