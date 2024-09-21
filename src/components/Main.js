@@ -36,30 +36,30 @@ function Main() {
         })
             .then(token => token.json())
             .then(function (token){
-                intervalID = setInterval(() => getResult(token.token), 2000)
+                intervalID = setInterval(() => getResult(token.token), 1000)
             })
     }
 
     async function getResult(token) {
-        await fetch(process.env.REACT_APP_FETCH_URL + 'task/' + token, {
+        console.log(process.env.REACT_APP_FETCH_URL + 'task/' + token);
+        let testLink = process.env.REACT_APP_FETCH_URL + 'task/' + token;
+        await fetch(testLink, {
             method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
         })
             .then(result => result.json())
             .then(result => resultTable = result.body)
             .then(function(resultTable)
         {
-            if(JSON.stringify(resultTable) !== JSON.stringify(prevStateTable)) {
-                document.getElementById('table').getElementsByTagName('tbody').innerHTML = '';
-                prevStateTable = resultTable.map((el) => el);
-                fillTable(resultTable);
-            }
-            else {
-                clearInterval(intervalID);
-            }
-        })
+                if(JSON.stringify(resultTable) !== JSON.stringify(prevStateTable)) {
+                    document.getElementById('table').getElementsByTagName('tbody').innerHTML = '';
+                    prevStateTable = resultTable.map((el) => el);
+                    fillTable(resultTable);
+                }
+                else {
+                    clearInterval(intervalID);
+                }
+            })
+            .catch(error => console.log(error.message));
     }
 
     function fillTable(resultTable) {
@@ -128,7 +128,7 @@ function Main() {
     function btnCopyTable () {
         let csvData = [];
         let rows = document.getElementsByTagName('tr');
-        for(let i = 0; i < rows.length; i++){
+        for(let i = 0; i < rows.length - 1; i++){
             let cols = rows[i].querySelectorAll('td, th');
             let csvrow = [];
             for(let j = 0; j < cols.length; j++){
@@ -137,7 +137,6 @@ function Main() {
             csvData.push(csvrow.join(','));
         }
         csvData = csvData.join('\n');
-        // csvData = $(csvData).text();
         csvData = csvData.toString();
         navigator.clipboard.writeText(csvData)
             .then(() => console.log('Copied!'))
