@@ -12,13 +12,13 @@ body {
 .container {
     min-height: 100vh;
     display: grid;
-    grid-template-columns: 50px 1fr 1fr 25px 1fr 1fr 50px;
+    grid-template-columns: 50px 1fr 10px 1fr 1fr 1fr 50px;
     grid-column-gap: 25px;
     grid-template-rows: 50px 75px 1fr 25px 50px;
     grid-template-areas:
     "header header header header header header header"
     ". button-1 result result result button-2 ."
-    ". textarea textarea . table table ."
+    ". textarea . table table table ."
     ". . . . . . ."
     "footer footer footer footer footer footer footer";
 }
@@ -154,6 +154,10 @@ body {
     margin-left: 20px;
 }
 
+#result-all {
+    border-bottom: 4px solid #8FC1E3;
+}
+
 #result-2xx {
     border-bottom: 4px solid #3B945E;
 }
@@ -171,7 +175,7 @@ body {
 }
 
 #result-other {
-    border-bottom: 4px solid #687864;
+    border-bottom: 4px solid #aebaac;
 }
 
 .textarea-container {
@@ -217,6 +221,8 @@ body {
     font-weight: 400;
     line-height: 1.5;
     color: #212529;
+    border-collapse: separate;
+    border-spacing: 50px 0;
 }
 
 #table th {
@@ -228,11 +234,6 @@ body {
 #table td, #table th {
     height: 30px;
     line-height: 30px;
-}
-
-#table div {
-    height: 100%;
-    overflow: hidden;
 }
 
 .green {
@@ -257,7 +258,7 @@ body {
 
 .other {
     font-weight: bold;
-    color: #687864;
+    color: #aebaac;
 }
 
 .footer {
