@@ -1,42 +1,6 @@
 import React, {useState} from "react";
 import "./../App.css"
 
-/*
-https://github.com/
-https://gitlab.figvam.ru/
-https://it-dev-journal.ru/articles/struktura-react-prilozheniya
-https://tproger.ru/translations/react-basic-weather-app
-https://redux.js.org/tutorials/essentials/part-1-overview-concepts
-https://internetingishard.netlify.app/html-and-css/index.html
-https://javascript.ru/forum/dom-window/76608-vyvesti-soobshhenie-o-kopirovanii-teksta.html
-https://qna.habr.com/q/788145
-https://apidog.com/blog/websocket-connection-failed/
-https://ru.stackoverflow.com/questions/436662/javascript-promise-Как-прервать-длинную-цепочку-then
-https://qna.habr.com/q/1054412
-https://learn.javascript.ru/promise-error-handling
-https://kakoysegodnyadennedeli.ru/
-https://e.ggtimer.com/
-https://stihi.ru/cgi-bin/assist.pl
-https://www.earthcam.com/
-https://www.rainymood.com/
-https://eelslap.com/
-https://bomomo.com/
-https://cat-bounce.com/
-https://ashmanov.net/ru/demos/stylist/
-https://www.eso.org/public/images/eso1242a/zoomable/
-https://yandex.ru/company/
-https://randstuff.ru/ask/
-*/
-
-/* Blacklist:
-https://multator.ru/draw/ - вечная загрузка
-http://www.sokra.ru/ - вечная загрузка
-https://freshswag.ru/ - вечная загрузка
-https://stihi.ru/cgi-bin/assist.pl - 503, хотя сайт доступен
-https://bomomo.com/ - 503, хотя сайт доступен
-http://ww1.proteys.info/ - что то странное
-*/
-
 function Main() {
 
     const [counter2xx, setCounter2xx] = useState(0);
@@ -161,48 +125,7 @@ function Main() {
                     break;
             }
         }
-
-        // let tab = document.getElementById('table');
-        // let codeCellCollection = document.getElementsByClassName('codeColClass');
-        // for (let i = 1; i <= tab.rows.length - 1; i++) {
-        //     let codeCol = codeCellCollection[i];
-        //     codeCol = codeCol.textContent;
-        //     // console.log(codeCol);
-        //     // for (let i = 1; i <= tab.rows.length - 1; i++) {
-        //         switch (codeCol) {
-        //             case '200 OK':
-        //                 document.getElementById('table').rows[i].cells[1].classList.add('green');
-        //                 setCounter2xx((counter2xx) => { return counter2xx + 1; });
-        //                 debugger
-        //                 break;
-        //             case '301 Moved Permanently':
-        //             case '304 Not Modified':
-        //                 document.getElementById('table').rows[i].cells[1].classList.add('yellow-green');
-        //                 setCounter3xx((counter3xx) => { return counter3xx + 1; });
-        //                 break;
-        //             case '400 Bad Request':
-        //             case '403 Forbidden':
-        //             case '404 Not Found':
-        //             case '413 Request Entity Too Large':
-        //             case '414 Request-URL Too Long':
-        //                 document.getElementById('table').rows[i].cells[1].classList.add('yellow');
-        //                 setCounter4xx((counter4xx) => { return counter4xx + 1; });
-        //                 break;
-        //             case '500 Internal Server Error':
-        //             case '502 Bad Gateway':
-        //             case '503 Service Unavailable':
-        //             case '504 Gateway Timeout':
-        //                 document.getElementById('table').rows[i].cells[1].classList.add('red');
-        //                 setCounter5xx((counter5xx) => { return counter5xx + 1});
-        //                 debugger
-        //                 break;
-        //             default:
-        //                 document.getElementById('table').rows[i].cells[1].classList.add('other');
-        //                 setCounterOther((counterOther) => { return counterOther + 1});
-        //                 break;
-        //         }
-            // }
-        }
+    }
 
 
     function btnCopyTable () {
