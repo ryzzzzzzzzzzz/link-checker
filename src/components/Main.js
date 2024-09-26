@@ -50,7 +50,7 @@ function Main() {
             .then(result => resultTable = result.body)
             .then(function(resultTable)
         {
-            $('#table > tbody > tr').remove();
+            $('#table tbody tr').remove();
             fillTable(resultTable);
         })
             .catch(error => console.log(error.message));
