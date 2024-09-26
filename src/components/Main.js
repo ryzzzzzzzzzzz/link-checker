@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import "./../App.css"
+import $ from jquery;
 
 function Main() {
 
@@ -49,7 +50,7 @@ function Main() {
             .then(result => resultTable = result.body)
             .then(function(resultTable)
         {
-            document.getElementById('table').getElementsByTagName('tbody')[0].rows.innerHTML = '';
+            $('#table > tbody > tr').remove();
             fillTable(resultTable);
         })
             .catch(error => console.log(error.message));
