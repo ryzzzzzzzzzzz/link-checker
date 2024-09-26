@@ -51,6 +51,11 @@ function Main() {
             .then(function(resultTable)
         {
             $('#table tbody tr').remove();
+            setCounter2xx((counter2xx) => { return 0 });
+            setCounter3xx((counter3xx) => { return 0 });
+            setCounter4xx((counter4xx) => { return 0 });
+            setCounter5xx((counter5xx) => { return 0 });
+            setCounterAll((counterAll) => { return 0 });
             fillTable(resultTable);
         })
             .catch(error => console.log(error.message));
