@@ -49,11 +49,8 @@ function Main() {
             .then(result => resultTable = result.body)
             .then(function(resultTable)
         {
-            do {
-                document.getElementById('table').getElementsByTagName('tbody')[0].rows.innerHTML = '';
-                fillTable(resultTable);
-                break;
-            }while(resultTable.length === data.urls.length)
+            document.getElementById('table').getElementsByTagName('tbody')[0].rows.innerHTML = '';
+            fillTable(resultTable);
         })
             .catch(error => console.log(error.message));
     }
@@ -114,7 +111,9 @@ function Main() {
                     setCounterAll((counterAll) => { return counterAll + 1; });
                     break;
             }
-            clearInterval(intervalID);
+            if(resultTable.length === data.urls.length){
+                clearInterval(intervalID);
+            }
         }
     }
 
