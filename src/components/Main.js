@@ -113,6 +113,8 @@ function Main() {
             }
             if(resultTable.length === data.urls.length){
                 clearInterval(intervalID);
+            }else{
+                console.log('Continue')
             }
         }
     }
