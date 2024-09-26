@@ -17,7 +17,6 @@ function Main() {
 
     let resultTable = [];
     let intervalID = 0;
-    let prevStateTable = [];
 
     function createLinesArray() {
         let textaeraVal = document.querySelector('#textarea').value;
@@ -25,7 +24,7 @@ function Main() {
         Object.assign(data.urls, linesArray);
     }
 
-    async function response(linesArray, res) {
+    async function response() {
         setLoading(true);
         document.getElementById('textarea').value = '';
         await fetch(process.env.REACT_APP_FETCH_URL + 'new_task', {
@@ -42,42 +41,33 @@ function Main() {
     }
 
     async function getResult(token) {
-        let testLink = process.env.REACT_APP_FETCH_URL + 'task/' + token;
-        await fetch(testLink, {
+        let getResultLink = process.env.REACT_APP_FETCH_URL + 'task/' + token;
+        await fetch(getResultLink, {
             method: 'GET',
         })
             .then(result => result.json())
             .then(result => resultTable = result.body)
             .then(function(resultTable)
         {
-                if(JSON.stringify(resultTable) !== JSON.stringify(prevStateTable)) {
-                    document.getElementById('table').getElementsByTagName('tbody').innerHTML = '';
-                    prevStateTable = resultTable.map((el) => el);
-                    fillTable(resultTable);
-                }
-                else {
-                    clearInterval(intervalID);
-                }
-            })
+            do {
+                document.getElementById('table').getElementsByTagName('tbody')[0].rows.innerHTML = '';
+                fillTable(resultTable);
+                break;
+            }while(resultTable.length === data.urls.length)
+        })
             .catch(error => console.log(error.message));
     }
+
 
     function fillTable(resultTable) {
         let tbodyRef = document.getElementById('table').getElementsByTagName('tbody')[0];
         resultTable.forEach(row => {
             let newRow = tbodyRef.insertRow();
-            let i = 1;
-            let j = 2;
             Object.values(row).forEach(value => {
                 let newCell = newRow.insertCell();
                 let newText = document.createTextNode(value);
                 newCell.appendChild(newText);
                 newCell.innerHTML = value;
-                if (i === j) {
-                    j = j + 6;
-                    newCell.classList.add('codeColClass');
-                }
-                i = i + 1;
             })
         })
         setLoading(false);
@@ -124,6 +114,7 @@ function Main() {
                     setCounterAll((counterAll) => { return counterAll + 1; });
                     break;
             }
+            clearInterval(intervalID);
         }
     }
 
