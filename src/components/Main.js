@@ -45,7 +45,7 @@ function Main() {
         await fetch(getResultLink, {
             method: 'GET',
         })
-            .then(result => result.json())
+            .then(result => result.json().catch(error => console.log(error.message)))
             .then(result => resultTable = result.body)
             .then(function(resultTable)
         {
