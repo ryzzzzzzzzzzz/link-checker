@@ -56,6 +56,7 @@ function Main() {
             setCounter4xx((counter4xx) => { return 0 });
             setCounter5xx((counter5xx) => { return 0 });
             setCounterAll((counterAll) => { return 0 });
+            setCounterOther((counterOther) => { return 0 });
             fillTable(resultTable);
         })
             .catch(error => console.log(error.message));
