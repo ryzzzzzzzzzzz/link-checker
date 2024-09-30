@@ -126,11 +126,10 @@ function Main() {
         }
     }
 
-
-    function btnCopyTable () {
+    function tableToCSV () {
         let csvData = [];
         let rows = document.getElementsByTagName('tr');
-        for(let i = 0; i < rows.length - 1; i++){
+        for(let i = 0; i < rows.length; i++){
             let cols = rows[i].querySelectorAll('td, th');
             let csvrow = [];
             for(let j = 0; j < cols.length; j++){
@@ -139,9 +138,21 @@ function Main() {
             csvData.push(csvrow.join(','));
         }
         csvData = csvData.join('\n');
-        csvData = csvData.toString();
-        navigator.clipboard.writeText(csvData)
-            .then(() => console.log('Copied!'))
+        downloadCSVFile(csvData)
+    }
+
+    function downloadCSVFile (csvData) {
+        let CSVFile = new Blob([csvData], {
+            type: "text/csv"
+        });
+        let tempLink = document.createElement('a');
+        tempLink.download = "GfG.csv";
+        let url = window.URL.createObjectURL(CSVFile);
+        tempLink.href = url;
+        tempLink.style.display = "none";
+        document.body.appendChild(tempLink);
+        tempLink.click();
+        document.body.removeChild(tempLink);
     }
 
     return(
@@ -159,7 +170,7 @@ function Main() {
                     <button onClick={response}>Check links</button>
                 </div>
                 <div className='button-container-2'>
-                    <button onClick={btnCopyTable} id='copy'>Copy links as CSV</button>
+                    <button onClick={tableToCSV} id='copy'>Copy links as CSV</button>
                 </div>
             <div className='result-container'>
                 <div><span id='result-all'>All: {counterAll}</span></div>
