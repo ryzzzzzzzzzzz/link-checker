@@ -37,7 +37,7 @@ function Main() {
         })
             .then(token => token.json())
             .then(function (token){
-                intervalID = setInterval(() => getResult(token.token), 200)
+                intervalID = setInterval(() => getResult(token.token), 1000)
             })
     }
 
