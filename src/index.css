@@ -1,13 +1,408 @@
-body {
+* {
+  padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  background-color: #F2F2F2;
 }
+
+/*======================================= Content =======================================*/
+
+.container {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 50px 1fr 1fr 10px 1fr 1fr 50px;
+  grid-column-gap: 25px;
+  grid-template-rows: 50px 75px 1fr 25px 50px;
+  grid-template-areas:
+    "header header header header header header header"
+    ". button-1 result result result button-2 ."
+    ". textarea textarea . table table ."
+    ". . . . . . ."
+    "footer footer footer footer footer footer footer";
+}
+
+.header {
+  grid-area: header;
+  background-color: #8FC1E3;
+}
+
+.logo-container {
+  margin-top: 2px;
+  margin-left: 24px;
+  flex-direction: row;
+}
+
+.logo {
+  font-size: 32px;
+  color: #F7F9FB;
+}
+
+/*======================================= Buttons =======================================*/
+
+.button-container-1 {
+  grid-area: button-1;
+}
+
+.button-container-2 {
+  grid-area: button-2;
+}
+
+.button-container-1 button {
+  margin-top: 8px;
+  appearance: none;
+  background-color: #182628;
+  border: 2px solid #1A1A1A;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #F7F9FB;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  min-height: 40px;
+  min-width: 0;
+  outline: none;
+  padding: 16px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+  will-change: transform;
+  white-space: nowrap;
+}
+
+.button-container-2 button {
+  margin-top: 8px;
+  appearance: none;
+  background-color: #182628;
+  border: 2px solid #1A1A1A;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #F7F9FB;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  min-height: 40px;
+  min-width: 0;
+  outline: none;
+  padding: 16px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+  will-change: transform;
+  white-space: nowrap;
+}
+
+.button-container-1 button:disabled {
+  pointer-events: none;
+}
+
+.button-container-2 button:disabled {
+  pointer-events: none;
+}
+
+.button-container-1 button:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.button-container-2 button:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.button-container-1 button:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+.button-container-2 button:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+/*======================================= Buttons =======================================*/
+
+/*======================================= Content =======================================*/
+
+.result-container {
+  grid-area: result;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  white-space: nowrap;
+  font-size: 1.3vw;
+  text-align: center;
+}
+
+.result-container div {
+  margin-top: 16px;
+  margin-left: 20px;
+}
+
+#result-all {
+  border-bottom: 4px solid #8FC1E3;
+}
+
+#result-2xx {
+  border-bottom: 4px solid #3B945E;
+}
+
+#result-3xx {
+  border-bottom: 4px solid #9acd32;
+}
+
+#result-4xx {
+  border-bottom: 4px solid #FCCD04;
+}
+
+#result-5xx {
+  border-bottom: 4px solid #F13C20;
+}
+
+#result-other {
+  border-bottom: 4px solid #aebaac;
+}
+
+.textarea-container {
+  grid-area: textarea;
+  max-width: 100%;
+  height: 100%;
+}
+
+#textarea {
+  resize: none;
+  width: 100%;
+  height: 100%;
+  background-color: #F7F9FB;
+  border-radius: 15px;
+  padding: 0.375rem 0.75rem;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  box-sizing: border-box;
+}
+
+.table-container {
+  outline: 1px solid black;
+  grid-area: table;
+  max-width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+#table {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  background-color: #F7F9FB;
+  padding: 0.375rem 0.75rem;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  border-collapse: separate;
+  border-spacing: 50px 0;
+}
+
+#table th {
+  position: sticky;
+  top: -6px;
+  background-color: #F7F9FB;
+}
+
+#table td, #table th {
+  height: 30px;
+  line-height: 30px;
+}
+
+.green {
+  font-weight: bold;
+  color: #3B945E;
+}
+
+.yellow-green {
+  font-weight: bold;
+  color: #9acd32;
+}
+
+.yellow {
+  font-weight: bold;
+  color: #FCCD04;
+}
+
+.red {
+  font-weight: bold;
+  color: #F13C20;
+}
+
+.other {
+  font-weight: bold;
+  color: #aebaac;
+}
+
+.footer {
+  grid-area: footer;
+  background-color: #8FC1E3;
+}
+
+/*======================================= Loader =======================================*/
+
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes arrow-spin {
+  100% {
+    transform: rotate(179deg);
+  }
+}
+
+@-webkit-keyframes arrow-spin {
+  100% {
+    -webkit-transform: rotate(179deg);
+  }
+}
+
+.psoload,
+.psoload *,
+.psoload *:before,
+.psoload *:after {
+  box-sizing: border-box;
+  transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+}
+
+.psoload {
+  position: relative;
+  margin: 30px auto;
+  height: 150px;
+  width: 150px;
+}
+
+.psoload .straight,
+.psoload .curve {
+  position: absolute;
+  top: 17.5%;
+  left: 17.5%;
+  width: 65%;
+  height: 65%;
+  border-radius: 100%;
+  animation: arrow-spin 0.85s cubic-bezier(0.2, 0.8, 0.9, 0.1) infinite;
+  -webkit-animation: arrow-spin 0.85s cubic-bezier(0.2, 0.8, 0.9, 0.1) infinite;
+}
+
+.psoload .straight:before,
+.psoload .straight:after {
+  content: '';
+  position: absolute;
+  width: 15%;
+  border-bottom: 3px solid #31708E;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.psoload .straight:before {
+  top: 5px;
+  left: 5px;
+}
+
+.psoload .straight:after {
+  bottom: 5px;
+  right: 5px;
+}
+
+.psoload .curve:before,
+.psoload .curve:after {
+  content: '';
+  position: absolute;
+  width: 45px;
+  height: 10px;
+  border: solid 3px transparent;
+  border-top-color: #31708E;
+  border-radius: 50%/10px 10px 0 0;
+  z-index: 90001;
+}
+
+.psoload .curve:before {
+  transform: rotate(-63deg) translateX(-27px) translateY(-4px);
+  -webkit-transform: rotate(-63deg) translateX(-27px) translateY(-4px);
+}
+
+.psoload .curve:after {
+  bottom: 5px;
+  right: 5px;
+  transform: rotate(115deg) translateX(-26px) translateY(-12px);
+  -webkit-transform: rotate(115deg) translateX(-26px) translateY(-12px);
+}
+
+.psoload .center {
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  width: 60%;
+  height: 60%;
+  border-radius: 100%;
+  border: 3px solid #31708E;
+}
+
+.psoload .inner {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  width: 50%;
+  height: 50%;
+  border-radius: 100%;
+  animation: arrow-spin 0.85s cubic-bezier(0.2, 0.8, 0.9, 0.1) infinite reverse;
+  -webkit-animation: arrow-spin 0.85s cubic-bezier(0.2, 0.8, 0.9, 0.1) infinite reverse;
+}
+
+.psoload .inner:before,
+.psoload .inner:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-bottom-width: 11px;
+  border-bottom-color: #31708E;
+}
+
+.psoload .inner:before {
+  top: 12px;
+  left: 12px;
+  transform: rotate(128deg);
+  -webkit-transform: rotate(128deg);
+}
+
+.psoload .inner:after {
+  bottom: 12px;
+  right: 12px;
+  transform: rotate(-48deg);
+  -webkit-transform: rotate(-48deg);
+}
+
+/*======================================= Loader =======================================*/
