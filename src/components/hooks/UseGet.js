@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 export default function UseGet(props) {
 
-    useEffect( (props) => {
+    useEffect( () => {
         const task = props.token[props.index]
         const timer = props.userLinks.length * 10
         let counter = 0;
@@ -28,9 +28,9 @@ export default function UseGet(props) {
                             }
                             if(!done) {
                                 tableRes = JSON.parse(str).body
-                                props.getTable(tableRes)
+                                return props.getTable(tableRes)
                                 if(counter > timer  || tableRes.length === props.userLinks[props.index].urls.length ) {
-                                    clearInterval(intervalId)
+                                    return clearInterval(intervalId)
                                 } else {}
                             }
                         })
@@ -48,7 +48,6 @@ export default function UseGet(props) {
         function stopInterval() {
             clearInterval(intervalId)
             props.getErrorRequest();
-
         }
     }, [props.token])
 }
