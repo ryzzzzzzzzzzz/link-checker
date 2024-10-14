@@ -7,6 +7,7 @@ export default function UseGet(props) {
         const timer = props.userLinks.length * 10
         let counter = 0;
         let intervalId = null
+        let tableRes = []
 
         async function fetchTable() {
             const decoder = new TextDecoder('utf-8');
@@ -20,18 +21,17 @@ export default function UseGet(props) {
                     (async() => {
                         response.body.getReader().read().then(({ value, done }) => {
                             const str = decoder.decode(value)
-                            let tableRes = []
                             counter = counter + 1
-
                             if(counter > timer) {
                                 stopInterval()
-                            }
-                            if(!done) {
-                                tableRes = JSON.parse(str).body
-                                return props.getTable(tableRes)
-                                if(counter > timer  || tableRes.length === props.userLinks[props.index].urls.length ) {
-                                    return clearInterval(intervalId)
-                                } else {}
+                            } else {
+                                if(!done) {
+                                    tableRes = JSON.parse(str).body
+                                    props.getTable(tableRes)
+                                    if(counter > timer  || tableRes.length === props.userLinks[props.index].urls.length ) {
+                                        return clearInterval(intervalId)
+                                    } else {}
+                                } else{}
                             }
                         })
                     })()
