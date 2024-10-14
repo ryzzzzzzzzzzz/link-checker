@@ -21,8 +21,13 @@ const TextareaForLinks = (props) => {
     return (
         <form onSubmit={handleSubmit}>
             <label>Links</label>
-            <button type='submit' className='button muted-button'>Check links</button>
-            <textarea id="textareaForLinks" cols="30" rows="10" name='urls' value={userLink.urls}
+            <div className='button-container-1'>
+                <button type='submit' className='button muted-button'>Check links</button>
+            </div>
+            <div className='button-container-2'>
+                <button id='copy' className='button muted-button'>Copy links as CSV</button>
+            </div>
+            <textarea id="textarea" cols="30" rows="10" name='urls' value={userLink.urls}
                       onChange={handleTextareaChange}
             />
         </form>

@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import TextareaForLinks from "./components/textareas/TextareaForLinks";
 import ResultTable from "./components/tables/ResultTable";
-import HistoryTable from "./components/tables/HistoryTable";
 import UsePost from "./components/hooks/UsePost";
 import UseGet from "./components/hooks/UseGet";
 import GetCodeResult from "./components/hooks/GetCodeResult";
@@ -44,7 +43,6 @@ const App = () => {
     }
 
     const getCodeResult = (row) => {
-        debugger
         const reRender = table.length > 0 && table.length <= userLinks[index - 1].urls.length
         if(reRender) {
             setRowCodeResult(prevRowCodeResult => ({
@@ -57,7 +55,6 @@ const App = () => {
             }))
             setRowCode([])
         } else {}
-        debugger
         switch (row.code.charAt(0)) {
             case '2': {
                 setRowCodeResult((prevRowCodeResult) => ({
@@ -134,12 +131,14 @@ const App = () => {
                            userLinks={userLinks}
                            index={index}
                            table={table}
-                           rowCodeResult={rowCodeResult}
-                           rowCode={rowCode}
             />
-            <h1>Link checker</h1>
+            <div className='header'>
+                <div className='logo-container'>
+                    <h1 className='logo'>Link checker</h1>
+                </div>
+            </div>
             <div className='flex-row'>
-                <div className='flex-large'>
+                <div className='textarea-container'>
                     {errorRequest ? <h2>Ups... Something went wrong</h2> : null}
                     <h2>Add links</h2>
                     <TextareaForLinks addUserLink={addUserLink}/>
@@ -149,11 +148,8 @@ const App = () => {
                     <ResultTable userLinks={userLinks} index={index} table={table}
                                  rowCodeResult={rowCodeResult} rowCode={rowCode}/>
                 </div>
-                <div className='flex-large'>
-                    <h2>History table</h2>
-                    <HistoryTable/>
-                </div>
             </div>
+            <div className='footer'></div>
         </div>
     )
 }

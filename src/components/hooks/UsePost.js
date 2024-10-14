@@ -14,7 +14,6 @@ export default function UsePost(props) {
                 .then(tokenRes => tokenRes.json())
                 .then(json => {props.getToken(json)})
         }
-        debugger
         if(props.userLinks.length !== 0) {
             fetchToken()
                 .then(() => {})
