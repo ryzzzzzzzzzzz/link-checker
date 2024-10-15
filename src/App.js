@@ -39,9 +39,11 @@ const App = () => {
 
     const getTable = (tableRes) => {
         setTable(() => tableRes)
-        for(let i = 0; i < tableRes.length; i++) {
-            setHistoryTable((historyTable) => [...historyTable, tableRes[i]])
-        }
+        if (tableRes.length === userLinks[index].urls.length) {
+            for(let i = 0; i < tableRes.length; i++) {
+                setHistoryTable((historyTable) => [...historyTable, tableRes[i]])
+            }
+        } else {}
     }
 
     const getErrorRequest = () => {

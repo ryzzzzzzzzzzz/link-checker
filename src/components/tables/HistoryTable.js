@@ -16,7 +16,7 @@ const HistoryTable = (props) => (
             props.historyTable.map((row, index) => (
                 <tr key={index}>
                     <td>{row.url}</td>
-                    <td className={props.rowCode[index]}>{row.code}</td>
+                    <td className={props.rowCode[index + 1]}>{row.code}</td>
                     <td>{row.title}</td>
                     <td>{row.description}</td>
                     <td>{row.h1}</td>
