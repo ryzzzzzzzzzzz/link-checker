@@ -1,27 +1,32 @@
 import React from 'react'
 
-const HistoryTable = () => (
+const HistoryTable = (props) => (
     <table>
         <thead>
         <tr>
             <th>URL</th>
             <th>CODE</th>
             <th>TITLE</th>
-            <th>
-                <button className="button muted-button">Choose all</button>
-                <button className="button muted-button">Recheck</button>
-                <button className="button muted-button">Delete</button>
-            </th>
+            <th>DESCRIPTION</th>
+            <th>H1</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>link</td>
-            <td>code</td>
-            <td>title</td>
-            <td><input type="checkbox"/>Recheck</td>
-            <td><input type="checkbox"/>Delete</td>
-        </tr>
+        {props.historyTable.length > 0 ? (
+            props.historyTable.map((row, index) => (
+                <tr key={index}>
+                    <td>{row.url}</td>
+                    <td className={props.rowCode[index]}>{row.code}</td>
+                    <td>{row.title}</td>
+                    <td>{row.description}</td>
+                    <td>{row.h1}</td>
+                </tr>
+            ))
+        ) : (
+            <tr>
+                <td colSpan={3}>No links</td>
+            </tr>
+        )}
         </tbody>
     </table>
 )
