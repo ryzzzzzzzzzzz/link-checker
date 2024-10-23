@@ -1,6 +1,6 @@
 import {CSVDownload} from "react-csv";
 
-const ExportTableToCSV = (props) => {
+export function ExportTableToCSV(props) {
     const headers = [
         {label: 'URL', key: 'url'},
         {label: 'CODE', key: 'code'},
@@ -9,12 +9,13 @@ const ExportTableToCSV = (props) => {
         {label: 'H1', key: 'h1'}
     ]
 
+    debugger
     return (
         <div>
             <CSVDownload
                 headers={headers}
                 data={props.table}
-                filename='Table.csv'
+                filename='table.csv'
                 target='_blank'
             >
                 Download CSV
@@ -22,5 +23,3 @@ const ExportTableToCSV = (props) => {
         </div>
     )
 }
-
-export default ExportTableToCSV;
