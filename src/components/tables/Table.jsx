@@ -21,7 +21,7 @@ export default function Table () {
 
     useEffect(() => {
         if(links.length > 0){
-            countingResults(table, codeResults, setCodeResults)
+            countingResults(table, setCodeResults)
         }
     }, [table]);
 
