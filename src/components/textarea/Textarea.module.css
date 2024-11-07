@@ -1,0 +1,11 @@
+.textarea {
+    height: auto;
+    font-size: 100%;
+    line-height: 1.5;
+    margin: 0.5rem 0 0 0;
+    overflow: visible;
+    background-color: rgba(255,255,255,0.7);
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
