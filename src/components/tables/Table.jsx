@@ -1,7 +1,7 @@
 import {useContext, useEffect, useState} from "react";
 import {CSVLink} from "react-csv";
 import {Context} from "../../contexts";
-import { getToken, getTable } from "../../api/index";
+import {getToken, getTable} from "../../api/index";
 import { countingResults } from './../../utils/index'
 import Button from "../button/Button";
 import {Results, THead, TBody} from "../tables/tableBlocks/index"
